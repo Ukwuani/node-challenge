@@ -1,0 +1,75 @@
+version: "3.3"
+
+services:
+
+  # api:
+  #   build:
+  #     context: .
+  #   image: pleo-challenge:1
+  #   depends_on:
+  #     - nats
+  #     - redis
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.api-gw.rule=PathPrefix(`/`)"
+  #     - "traefik.http.services.api-gw.loadbalancer.server.port=9001"
+  #   networks:
+  #     - internal
+
+
+
+
+  
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: "$DB_USER"
+      POSTGRES_PASSWORD: "$DB_PASSWORD"
+      POSTGRES_DB: challenge
+    ports:
+      - 5433:5432
+    volumes:
+      - pleodata:/var/lib/postgresql/data
+      - ./dbscripts/postgres:/docker-entrypoint-initdb.d
+    networks:
+      - internal
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "$PG_ADMIN_EMAIL"
+      PGADMIN_DEFAULT_PASSWORD: "PG_ADMIN_PASSWORD"
+      PGADMIN_LISTEN_PORT: 8070
+    ports:
+      - "8080:8070"
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+    links:
+      - "postgres:pgsql-server"
+    networks:
+      - internal
+
+
+
+  # traefik:
+  #   image: traefik:v2.1
+  #   command:
+  #     - "--api.insecure=true" # Don't do this in production!
+  #     - "--providers.docker=true"
+  #     - "--providers.docker.exposedbydefault=false"
+  #   ports:
+  #     - 9001: 9001
+  #     - 3001:8080
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   networks:
+  #     - internal
+  #     - default
+
+networks:
+  internal:
+
+volumes:
+  pleodata:

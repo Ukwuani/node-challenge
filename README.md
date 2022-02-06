@@ -56,3 +56,6 @@ The command above will run the following test suites sequentially:
 
 
 Happy hacking 😁!
+
+## How The Hack is Going
+- [x] setup postgres and ran tests  

@@ -24,16 +24,18 @@ SET default_with_oids = false;
 -- Name: expenses; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.expenses (
-    id uuid,
+CREATE TABLE IF NOT EXISTS public.expenses (
+    id uuid PRIMARY KEY NOT NULL,
     merchant_name character varying(255),
     amount_in_cents integer,
     currency character varying(10),
-    user_id uuid,
+    user_id uuid ,
     date_created timestamp without time zone,
     status character varying(100)
 );
 
+-- OBSERVATIONS: 
+-- 1. Was going to add a foreign key constraint on the user_id column but 4 user_ids do not match match any user in table
 
 -- ALTER TABLE public.expenses OWNER TO postgres;
 
@@ -41,8 +43,8 @@ CREATE TABLE public.expenses (
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.users (
-    id uuid,
+CREATE TABLE IF NOT EXISTS public.users (
+    id uuid PRIMARY KEY NOT NULL,
     first_name character varying(100),
     last_name character varying(100),
     company_name character varying(255),
