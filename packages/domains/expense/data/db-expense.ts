@@ -1,6 +1,6 @@
 import { query as Query } from '@nc/utils/db';
 import { UUID } from '@nc/utils/types';
-import { addLimit, addOffset, addOrderBy } from './db.helper';
+import { addLimitAndOffset, addOrderBy } from './db.helper';
 
 export function readExpenses(userId: UUID, limit: number, page: number = 1, sort) {
   return Query(`
@@ -8,7 +8,6 @@ export function readExpenses(userId: UUID, limit: number, page: number = 1, sort
   FROM expenses 
   WHERE user_id = $1 
   ${addOrderBy(sort)}
-  ${addLimit(limit)} 
-  ${addOffset(page)}`,
-  [userId, limit, page]).then((response) => response.rows);
+  ${addLimitAndOffset(limit, page)}`,
+  [userId]).then((response) => response.rows);
 }

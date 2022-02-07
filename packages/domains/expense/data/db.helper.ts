@@ -7,10 +7,9 @@ export function addOrderBy(sort) {
   return sort ? `ORDER BY ${(JSON.parse(sort).map(sortFormatter)).toString()}` : '';
 }
 
-export function addLimit(limit?: number): string {
-  return (limit) ? 'LIMIT $2' : '';
-}
-
-export function addOffset(page) {
-  return (page) ? 'OFFSET (($3 - 1) * $2)' : '';
+export function addLimitAndOffset(limit?: number, page?: number): string {
+  let query = '';
+  query += (limit) ? `LIMIT ${limit}` : '';
+  query += (page) ? ` OFFSET ${(page - 1) * limit}` : '';
+  return query;
 }

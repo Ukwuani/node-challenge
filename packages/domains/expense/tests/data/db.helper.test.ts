@@ -1,4 +1,4 @@
-import { addLimit, addOffset, addOrderBy, sortFormatter } from '../../data/db.helper';
+import { addLimitAndOffset, addOrderBy, sortFormatter } from '../../data/db.helper';
 
 describe('[Packages | Expense-domain | DATA | DB HELPER] sortFormatter', () => {
   test('sortFormatter should format the sort field string, changing the signs into actual orders', () => {
@@ -14,19 +14,17 @@ describe('[Packages | Expense-domain | DATA | DB HELPER] sortFormatter', () => {
   });
 });
 
-describe('[Packages | Expense-domain | DATA | DB HELPER] addLimit', () => {
-  test('addLimit should add LIMIT to the query if data is passed in', () => {
-    return expect(addLimit(1)).toEqual('LIMIT $2');
+describe('[Packages | Expense-domain | DATA | DB HELPER] addLimitOffset', () => {
+  test('addLimitOffset should add LIMIT & OFFSET to the query if data is passed in', () => {
+    return expect(addLimitAndOffset(1, 2)).toEqual('LIMIT 1 OFFSET 1');
   });
 
-  test('addLimit should not add LIMIT to query if limit is null', () => {
-    return expect(addLimit()).toEqual('');
+  test('addLimitOffset should add LIMIT Without OFFSET to the query if data is passed in', () => {
+    return expect(addLimitAndOffset(1, 0)).toEqual('LIMIT 1');
   });
-});
 
-describe('[Packages | Expense-domain | DATA | DB HELPER] addOffset', () => {
-  test('addOffset should add OFFSET to query if present', () => {
-    return expect(addOffset(1)).toEqual('OFFSET (($3 - 1) * $2)');
+  test('addLimitOffset should not add LIMIT & OFFSET to query if limit is null', () => {
+    return expect(addLimitAndOffset()).toEqual('');
   });
 });
 
