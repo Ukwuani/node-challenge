@@ -1,22 +1,26 @@
 import { ApiError } from '@nc/utils/errors';
-import { getUserExpenses } from '../model';
-import { getExpenseSchema } from '../validator/schema';
-import { validator } from '@nc/utils/validator';
+import { ExpenseModel } from '../model';
+import { ExpenseSchema } from '../validator/schema';
 import { Router } from 'express';
 import { to } from '@nc/utils/async';
+import { validator } from '@nc/utils/validator';
 
 export const router = Router();
 
 // expose the user expenses retreiver to '/expense/v1/get-user-expenses'
 router.get('/get-user-expenses',
-  validator(getExpenseSchema),
+  validator(ExpenseSchema),
   async (req, res, next) => {
-    const [expenseError, userExpenses] = await to(getUserExpenses(
-      `${req.query?.userId}`,
-      Number(req.query?.limit) || 0,
-      Number(req.query?.page) || 0,
-      req.query?.sort
-    ));
+    const [expenseError, userExpenses] = await to(ExpenseModel.readAll({
+      userId: `${req.query?.userId}`,
+      query: req.query?.query,
+      fields: req.query?.fields,
+      limit: Number(req.query?.limit) || 0,
+      page: Number(req.query?.page) || 0,
+      sort: req.query?.sort,
+      search: req.query?.search,
+      searchFields: req.query?.searchFields,
+    }));
 
     // throw some error is detected
     if (expenseError) {
@@ -29,11 +33,6 @@ router.get('/get-user-expenses',
       ));
     }
 
-    // if no data was found for the query, return empty object
-    if (!userExpenses) {
-      return res.json({});
-    }
-
     // respond with data
-    return res.json(userExpenses);
+    return res.json(userExpenses || {});
   });
