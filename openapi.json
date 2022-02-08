@@ -1,0 +1,201 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+    "title": "openapi",
+    "version": "1.0",
+    "contact": {
+      "name": "Api Support",
+      "url": "....com",
+      "email": "ukwuanibarnabas@gmail.com"
+      },
+    "description": "Openapi for pleo node challenge"
+  },
+  "tags": [
+    {
+      "name": "user",
+      "description": "User operations"
+    },
+    {
+        "name": "expense",
+        "description": "User Expenses operations"
+      }
+],
+"servers": [
+    {
+      "url": "https://localhost:9001",
+      "description": "Sercure Server"
+    },
+    {
+      "url": "http://localhost:9001",
+      "description": "Http Server"
+    }
+  ],
+  "paths": {
+    "/expense/v1/get-user-expenses": {
+        "get": {
+          "summary": "Find or Search User's expenses",
+          "description": "Find or Search User's expenses",
+          "tags": [
+            "expense"
+          ],
+          "operationId": "expense.findExpense",
+          "parameters": [
+            {
+                "in": "query",
+                "name": "userId",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "da140a29-ae80-4f0e-a62d-6c2d2bc8a474",
+                "required": true,
+                "description": "UserId of the user"
+              },
+            {
+              "in": "query",
+              "name": "sort",
+              "schema": {
+                "type": "string"
+              },
+              "example": "amount_in_cents",
+              "required": false,
+              "description": "Sorting"
+            },
+            {
+              "in": "query",
+              "name": "fields",
+              "schema": {
+                "type": "string"
+              },
+              "example": "[\"merchant_name\"]",
+              "required": false,
+              "description": "Filtered fields to be returned on call"
+            },
+            {
+              "in": "query",
+              "name": "search",
+              "schema": {
+                "type": "string"
+              },
+              "required": false,
+              "description": "Search text"
+            },
+            {
+              "in": "query",
+              "name": "searchFields",
+              "schema": {
+                "type": "string"
+              },
+              "example": "[merchant_name]",
+              "required": false,
+              "description": "Fields for searching"
+            },
+            {
+                "in": "query",
+                "name": "limit",
+                "schema": {
+                  "type": "number"
+                },
+                "example": 20,
+                "required": false,
+                "description": "Limit of rows to be returned"
+              },
+              {
+                "in": "query",
+                "name": "page",
+                "schema": {
+                  "type": "number"
+                },
+                "example": 1,
+                "required": false,
+                "description": "pagination"
+              },
+            {
+              "in": "query",
+              "name": "query",
+              "schema": {
+                "type": "object"
+              },
+              "required": false,
+              "description": "Custom query"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Find or Search Post Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "{action name}"
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "{action name} request was successful"
+                      },
+                      "code": {
+                        "type": "integer",
+                        "example": 200
+                      },
+                      "data": {
+                        "$ref": "#/components/schemas/Expense"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+        "securitySchemes": {
+          "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+          }
+        },
+          
+        "schemas": {
+          "Expense": {
+            "title": "Expense",
+            "type": "object",
+            "description": "",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "3e920f54-49df-4d0b-b11b-e6f08e3a2dca"
+              },
+              "merchant_name": {
+                "type": "string",
+                "example": "Cafe 22"
+              },
+              "amount_in_cents": {
+                "type": "number",
+                "example": 8000
+              },
+              "currency": {
+                "type": "string",
+                "example": "DKK"
+              },
+              "user_id": {
+                "type": "string",
+                "example": "da140a29-ae80-4f0e-a62d-6c2d2bc8a474"
+              },
+              "date_created": {
+                "type": "string",
+                "example": "2021-09-21T19:57:40.021Z"
+              },
+              "status": {
+                "type": "string",
+                "example": "pending"
+              }
+            }
+          }
+        }
+    }
+}
