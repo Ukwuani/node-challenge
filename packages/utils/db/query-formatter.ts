@@ -6,9 +6,9 @@ import { ILike } from 'typeorm';
  * @param data data to be parsed
  * @returns parsed data
  */
-function safeParse(data) {
+export function safeParse(data) {
   let safeData = data;
-  if (typeof data === 'string') {
+  if (typeof data === 'string' && (/[^\w]/.test(safeData[0]))) {
     safeData = JSON.parse(data);
   }
   return safeData;
@@ -23,7 +23,7 @@ export function addOrderBy(sort) {
   const orderBy = {};
   // if sort is a string, convert into an array
   if (typeof sortData === 'string') {
-    sortData = JSON.parse(sortData).toString().replace(/,/g, ' ').split(' ');
+    sortData = safeParse(sortData).toString().replace(/,/g, ' ').split(' ');
   }
 
   // if sort is an Array, run formatter on the converted data too
@@ -41,15 +41,14 @@ export function addOrderBy(sort) {
  * @param searchFields the fields to search the text in
  * @returns object {field: ILike('%')}
  */
-function addSearchQuery(search: string, searchFields: string[]) {
+export function addSearchQuery(search: string, searchFields: string[]) {
   const query = {};
   // if search and searchFields does not exist, return an empty object
-  if (!search && !searchFields) {
+  if (!search || !searchFields) {
     return query;
   }
   const searchData = safeParse(search);
   const searchFieldsData = safeParse(searchFields).toString().replace(/,/g, ' ').split(' ');
-
   //
   if (Array.isArray(searchFieldsData)) {
     searchFieldsData.forEach((el) => {
