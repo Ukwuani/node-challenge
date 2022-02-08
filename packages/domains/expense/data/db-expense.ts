@@ -1,4 +1,4 @@
-import Db from '@nc/utils/db';
+import Db from '@nc/utils/db/index.v2';
 import { formatQuery } from '@nc/utils/db/query-formatter';
 import { Expenses, GetExpensesRequest } from '../entity';
 
