@@ -62,6 +62,7 @@ Happy hacking 😁!
 - [x] created a branch & setup the expense api (inspired by the user api)
 - [x] added filter, paging and sorting to the query
 - [x] wrote some tests  for the route, db and helper functions
+- [x] added `fastest-validator` for api query validation
 - [x] migrated to `typeorm` for scalability & more. 
 - [x] added a query formatter for typeorm for handling more flexible queries on api
 - [x] wrote some tests on the query formatter, db and route
