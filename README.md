@@ -58,4 +58,11 @@ The command above will run the following test suites sequentially:
 Happy hacking 😁!
 
 ## How The Hack is Going
-- [x] setup postgres and ran tests  
+- [x] setup postgres (dockerized for more flexibility) and ran tests 
+- [x] created branch & setup the expense api (inspired by the user api)
+- [x] added filter, paging and sorting to the query
+- [x] wrote some tests  for the route, db and helper functions
+- [x] migrated to `typeorm` for better scalability & more. 
+- [x] added a query formatter for typeorm for more flexible queries on api
+- [x] wrote some tests on the query formatter, db and route
+- [x] added openapi & swagger for cool documentation
