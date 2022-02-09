@@ -57,12 +57,14 @@ The command above will run the following test suites sequentially:
 
 Happy hacking 😁!
 
-## How The Hack is Going
-- [x] setup postgres (dockerized for more flexibility) and ran tests 
-- [x] created branch & setup the expense api (inspired by the user api)
+## How The Hack Went
+- [x] setup postgres (dockerized for more flexibility) and ran tests
+- [x] created a branch & setup the expense api (inspired by the user api)
 - [x] added filter, paging and sorting to the query
 - [x] wrote some tests  for the route, db and helper functions
-- [x] migrated to `typeorm` for better scalability & more. 
-- [x] added a query formatter for typeorm for more flexible queries on api
+- [x] migrated to `typeorm` for scalability & more. 
+- [x] added a query formatter for typeorm for handling more flexible queries on api
 - [x] wrote some tests on the query formatter, db and route
 - [x] added openapi & swagger for cool documentation
+
+>> I must say it was fun working on this, at first I was enveloped in the circle of, how will **Pleo** want to see ... Well, I love the monorepo approach a lot and I tried my best to maintain a good feet, developing the package in isolation ... And I'm seriously thinking of adding some graphql :)
